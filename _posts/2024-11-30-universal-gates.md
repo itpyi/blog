@@ -1,8 +1,8 @@
 ---
 title: Universal quantum gates
 date: 2024-11-30
-categories: [Academics]
-tags: quantum
+categories: [学术随笔]
+tags: [量子计算]
 math: true
 description: History of the notion of universal quantum gates and an interesting application on quantum complexity theory.
 ---

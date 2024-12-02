@@ -1,6 +1,7 @@
 ---
 title: LaTeX 入门
-category: [Techniques]
+category: [技术笔记]
+tag: [LaTeX]
 mermaid: true
 toc: true
 description: 一份不求完善但可操作的 LaTeX 入门指引。

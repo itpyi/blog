@@ -1,6 +1,6 @@
 ---
 title: Mac 录制系统声音
-category: [Techniques]
+category: [技术笔记]
 ---
 
 希望截取一段新闻联播录音做语音分析，因此想录制电脑输出的声音。搜索了一圈，很多方案都过于笨重。看到少数派上的[这篇文章](https://sspai.com/post/61420)，使用 [BackgroundMusic](https://github.com/kyleneideck/BackgroundMusic)即可实现。
