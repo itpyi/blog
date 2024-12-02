@@ -14,7 +14,7 @@ tags: [LaTeX]
 
 ### 乐谱中截取
 
-事实上，将乐谱导出为 eps 或 pdf 格式的矢量图并导入文档也是一种可行的方案，该方案的要点在于保持谱表大小一定并使得边距尽量小。LilyPond 提供了类似的功能，见 [LilyPond Notation Reference: 3.4.1 Extracting fragments of music](http://lilypond.org/doc/v2.19/Documentation/notation/extracting-fragments-of-music)。
+事实上，将乐谱导出为 eps 或 pdf 格式的矢量图并导入文档也是一种可行的方案，该方案的要点在于保持谱表大小一定并使得边距尽量小。LilyPond 提供了类似的功能，见 [LilyPond Notation Reference: 3.4.1 Extracting fragments of music](https://lilypond.org/doc/v2.19/Documentation/notation/extracting-fragments-of-music)。
 
 如果我们要导出单行乐谱，只需要在 `layout` 中加入下列片段
 
