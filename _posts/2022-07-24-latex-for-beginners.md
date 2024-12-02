@@ -14,11 +14,13 @@ LaTeX 是一款排版软件, 常用于理工科专业文档的排版. 这篇文�
 
 第一步, 进入 [Overleaf](https://www.overleaf.com) 或对应的[中文版](https://cn.overleaf.com), 免费注册账号并登录. 本文后续的演示以英文版为例.
 
-<figure><img src="/assets/img/220724/overleaf1.png" width="100%"/><figcaption>注册并登录后的页面</figcaption></figure>
+![login](/assets/img/220724/overleaf1.png)
+_注册并登录后的页面_
 
 第二步, 点击左上的 New Project, 选择 Blank Project, 并在弹出的框内输入文档标题 A Starting Document, 加载后界面如下图所示 (加载可能较慢, 需要一点耐心). 
 
-<figure><img src="/assets/img/220724/startdoc.png" width="100%"/><figcaption>新项目的初始页面</figcaption></figure>
+![new project](/assets/img/220724/startdoc.png)
+_新项目的初始页面_
 
 此时我们可以看到界面分三个部分, 最左边是文件树 (file-tree), 在涉及多文件编辑时可以方便地切换文件, 这里我们只有一个文件 ``main.tex``, 因此可以点击中间的小箭头将其收起. **源文件** (source) ``main.tex`` 的内容在中间一栏展示, 我们的所有编辑和改动都是在源文件上进行的, 源文件经过**编译** (compile) 将得到一个 PDF 文件, 在界面右侧.
 
@@ -73,7 +75,8 @@ Numbered equations can be referred to conveniently. You do not need to worry tha
 
 点击 PDF 文件左上的 Recompile 或利用快捷键 ``Cmd``+``S`` (对于 Windows 系统, ``Cmd`` 换成 ``Ctrl``) 保存更改并编译, 得到新的 PDF 文件.
 
-<figure><img src="/assets/img/220724/englishpdf.png" width="100%"/><figcaption>将上述源文件编译后得到的结果</figcaption></figure>
+![compiled](/assets/img/220724/englishpdf.png)
+_将上述源文件编译后得到的结果_
 
 这里我们对上面的改动进行说明.
 - ``\usepackage{amsmath}``: 宏包 (package) 是其开发者写好的文件, 用来实现各种额外功能, 使用 ``\usepackage{}`` 命令调用. ``amsmath`` 宏包被用以支持各种数学排版, AMS 是美国数学会的简称. 如果文章中需要输入公式, 则需该命令.
@@ -116,15 +119,18 @@ Numbered equations can be referred to conveniently. You do not need to worry tha
 
 编译...... 出错了.
 
-<figure><img src="/assets/img/220724/chnerror.png" width="100%"/><figcaption>中文文档, 编译出错</figcaption></figure>
+![cn-error](/assets/img/220724/chnerror.png)
+_中文文档, 编译出错_
 
 出错的原因是, Overleaf 默认使用 pdfLaTeX 程序编译, 这种编译器 (compiler) 不支持中文. 点击页面左上角的 Menu, 将 Compiler 勾选为 XeLaTeX, 如下图. 
 
-<figure><img src="/assets/img/220724/compiler.png" width="100%"/><figcaption>选择不同的编译器</figcaption></figure>
+![another compiler](/assets/img/220724/compiler.png)
+_选择不同的编译器_
 
 重新编译后即得到正确的 PDF 文件. 
 
-<figure><img src="/assets/img/220724/chnright.png" width="100%"/><figcaption>编译成功的中文文档</figcaption></figure>
+![chnright](/assets/img/220724/chnright.png)
+_编译成功的中文文档_
 
 ## 本地编辑
 
