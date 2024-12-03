@@ -1,6 +1,5 @@
 ---
 title: Universal quantum gates
-date: 2024-11-30
 categories: [学术随笔]
 tags: [量子计算]
 math: true

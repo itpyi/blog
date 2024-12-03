@@ -1,6 +1,6 @@
 ---
 title: 重整化是什么
-tags: [学术随笔]
+category: [科普]
 math: true
 description: 本文将介绍重整化的基本思想, 假设读者具有初中物理基础.
 ---
