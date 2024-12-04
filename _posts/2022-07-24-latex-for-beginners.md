@@ -3,7 +3,6 @@ title: LaTeX 入门
 category: [技术笔记]
 tag: [LaTeX]
 mermaid: true
-toc: true
 description: 一份不求完善但可操作的 LaTeX 入门指引。
 ---
 
@@ -37,7 +36,7 @@ _新项目的初始页面_
 
 第三步, 对源文件加以修改, 例如
 
-```latex
+```tex
 \documentclass{article}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
@@ -97,7 +96,7 @@ _将上述源文件编译后得到的结果_
 
 言归正传, 令 LaTeX 支持中文有许多种方案, 我认为最方便的一种 (也是我最常用的一种) 是调用 ctex 宏包. 例如将源文件更改为
 
-```latex
+```tex
 \documentclass{article}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath} 

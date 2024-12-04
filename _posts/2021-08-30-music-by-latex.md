@@ -18,7 +18,7 @@ tags: [LaTeX]
 
 如果我们要导出单行乐谱，只需要在 `layout` 中加入下列片段
 
-```latex
+```
 \layout {
   clip-regions
   = #(list
@@ -27,12 +27,13 @@ tags: [LaTeX]
     (make-rhythmic-location 7 3 4)))
 }
 ```
+{: file="filename.ly"}
 
 `make-rhythmic-location` 之后的数字表示从第 5 小节第 1 个二分音符的对应的时间之后开始，到第 7 个小节第 3 个四分音符之前结束。运行时，加上 `-dclip-systems` 选项。这样操作输出的是 eps 和 pdf 格式的乐谱片段，其大小就是 LilyPond 中设置的谱表的大小。
 
 LilyPond 中上述截取只能截取单行，如果设置范围跨行了，会截多张图出来。如果涉及多行的谱例，续设定乐谱的行宽和 LaTeX 文档的行宽相等（或者设置到任何你想要的行宽）。同时我们希望首行不缩进，末行在该结束的位置正常结束不扩展为一整行，因此 `layout` 设置为
 
-```latex
+```
 \layout {
   indent = #0 % 首行不缩进
   line-width = 6.25\in % 设置行宽
@@ -48,6 +49,7 @@ LilyPond 中上述截取只能截取单行，如果设置范围跨行了，会�
     (make-rhythmic-location 17 1 2)))
 }
 ```
+{: file="filename.ly"}
 
 由于小节号标在每一行前，如果小节号位数不一致，截出来的图最左边对齐的位置就不一样，因此这里作一妥协：不显示小节号，上述代码中 `\context` 部分即实现不显示小节号的功能。
 
@@ -55,7 +57,7 @@ LilyPond 中上述截取只能截取单行，如果设置范围跨行了，会�
 
 用上述方法截取谱例后，需要将其放在 LaTeX 浮动体中。我们自定义 `Example` 浮动体。使用 `float` 宏包，同时设置外形类似三线表的浮动体。
 
-```latex
+```tex
 \usepackage{float}
 
 \floatstyle{ruled}
@@ -64,7 +66,7 @@ LilyPond 中上述截取只能截取单行，如果设置范围跨行了，会�
 
 使用时只需
 
-```latex
+```tex
 \begin{Example}
 	\raggedright % 多行谱例时使用，避免 Underfull \hbox warning.
 	\includegraphics{clip1.pdf}
@@ -80,7 +82,7 @@ LilyPond 中上述截取只能截取单行，如果设置范围跨行了，会�
 
 使用 `lilyglyphs` 宏包以提供音乐符号。该宏包默认的临时记号太大了，我们可以自行调整如下
 
-```latex
+```tex
 \renewcommand{\sharp}{\lilyGlyph[scale=1.2,raise=.5]{accidentals.sharp}}
 \renewcommand{\flat}{\lilyGlyph[scale=1.2,raise=.5]{accidentals.flat}}
 \renewcommand{\natural}{\lilyGlyph[scale=1.2,raise=.5]{accidentals.natural}}
@@ -90,13 +92,13 @@ LilyPond 中上述截取只能截取单行，如果设置范围跨行了，会�
 
 在公式环境中无法调整其大小，故定义
 
-```latex
+```tex
 \newcommand{\mathscript}[1]{\text{\scriptsize #1}}
 ```
 
 三个数字的数字低音使用如下命令实现
 
-```latex
+```tex
 \newcommand{\fbtri}[3]{
     \begin{array}{l}
     \scriptstyle{#1}\\
