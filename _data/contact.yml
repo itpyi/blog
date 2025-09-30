@@ -42,3 +42,7 @@
 - type: zhihu
   icon: "fa-brands fa-zhihu"
   url: 'https://www.zhihu.com/people/wang-yi-fei-54-67'
+
+- type: stack-exchange
+  icon: "fa-brands fa-stack-exchange"
+  url: 'https://stackexchange.com/users/17951034/itpyi'
