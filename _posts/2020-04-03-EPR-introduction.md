@@ -1,7 +1,7 @@
 ---
 title: EPR 到底说了些什么
-category: [学术随笔]
-tags: [量子力学]
+category: [学术随笔 | Scholarly Notes]
+tags: [量子力学 | Quantum Mechanics]
 math: true
 description: 本文是作者 "量子信息物理导论" 的课程作业, 介绍 EPR 悖论的内涵及其引发的争论.
 ---

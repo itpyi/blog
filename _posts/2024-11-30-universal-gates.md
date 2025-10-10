@@ -1,7 +1,7 @@
 ---
 title: Universal quantum gates
-categories: [学术随笔]
-tags: [量子计算]
+categories: [学术随笔 | Scholarly Notes]
+tags: [量子计算 | Quantum Computation]
 math: true
 description: History of the notion of universal quantum gates and an interesting application on quantum complexity theory.
 ---

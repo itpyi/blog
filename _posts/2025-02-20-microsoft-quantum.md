@@ -1,7 +1,7 @@
 ---
 title: 如何评价微软发布的拓扑量子芯片？
 categories: [科普]
-tags: [量子计算]
+tags: [量子计算 | Quantum Computation]
 math: true
 description:  
 ---
