@@ -1,7 +1,7 @@
 ---
 title: A clean proof of the cleaning lemma
 categories: [学术随笔 | Scholarly Notes]
-tags: [量子计算 | Quantum Computation]
+tags: [量子计算 | Quantum Computation, 量子纠错 | Quantum Error Correction]
 # math: true
 # description: 
 ---
