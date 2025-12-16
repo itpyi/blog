@@ -24,7 +24,7 @@ The circuit contains only Clifford gates and Pauli measurements, but effectively
 ![circuit_gt_ct](/assets/img/251216/gate_tele_ct.svg)
 _Figure 2. Circuit for teleportation of a $T$ gate, with controlled-$S$ gate explicitly_
 
-Actually, it contains two sources of non-Cliffordness: the input and the controlled-$S$ gate. Nevertheless, the "amount" of non-Cliffordness is still one $T$ gate, since its net effect is a $T$ gate. We can perform the following transformation on the circuit to see this directly (note that $TXT^{\dagger} = SX =(X+Y)/\sqrt{2}$, and three CNOT gates composes to a SWAP).
+Actually, it contains two sources of non-Cliffordness: the input and the controlled-$S$ gate. Nevertheless, the "amount" of non-Cliffordness is still one $T$ gate, since its net effect is a $T$ gate. We can perform the following transformation on the circuit to see this directly (note that $TXT^{\dagger} = SX$, and three CNOT gates composes to a SWAP).
 
 ![circuit_eq](/assets/img/251216/gate_tele_eq.svg)
 _Figure 3. Transformation of the teleportation circuit_
@@ -36,7 +36,7 @@ _Figure 4. Circuit without feedback_
 
 In the following, we will analyze how the non-stabilizerness makes classical simulation difficult.
 
-First, a direct application of $T$ conjugates $Z$ to itself, and $X$ to $(X+Y)/\sqrt{2}$. After this, you should trace two terms for one $X$ before $T$. This implies that the complexity of simulating a Clifford+T circuit grows exponentially with the number of $T$ gates.
+First, a direct application of $T$ conjugates $Z$ to itself, and $X$ to $SX=(X+Y)/\sqrt{2}$. After this, you should trace two terms for one $X$ before $T$. This implies that the complexity of simulating a Clifford+T circuit grows exponentially with the number of $T$ gates.
 
 Second, for the simplest case (no feedback or controlled gate), a trace-back stabilizer analysis shows $ZI \leftarrow ZI, XI \leftarrow XX$ and $ZZ \leftarrow IZ, XZ \leftarrow YY$. This shows that, on the first line, $Z$ is mapped to $Z$ since $ZI$ is invariant, and $X$ is mapped to $(X+(-1)^{m}Y)/\sqrt{2}$ since $X_{1}(X_{2}+Y_{2})/\sqrt{2}$ is mapped to $(XI+YZ)/\sqrt{2}$. This shows an effect of $T^{\pm 1}$: a single term stabilizer $X$ splits into two terms.
 
