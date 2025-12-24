@@ -1,7 +1,7 @@
 ---
 title: Is it necessary to perform virtual Pauli gates before applying T gate?
 categories: [学术随笔 | Scholarly Notes]
-tags: [量子计算 | Quantum Computation, 量子纠错 | Quantum Error Correction]
+tags: [量子计算 | Quantum Computation, 量子纠错 | Quantum Error Correction, 实践量子纠错探微 | Subtleties in Practical QEC]
 math: true
 # description: 
 ---
