@@ -5,6 +5,9 @@ tags: [量子计算 | Quantum Computation, 量子纠错 | Quantum Error Correcti
 mermaid: true
 ---
 
+> The reader may refer to the [Chinese version](/blog/posts/decoding-in-QEC-cn). 
+{: .prompt-tip }
+
 In the field of quantum error correction, the term “decoding” carries two distinct but equally relevant meanings. The first refers to the quantum circuit that maps logical qubits back to physical qubits (the inverse of encoding), while the second refers to the classical procedure of inferring errors from a measured syndrome. 
 
 For example, one should constantly run a decoder, in the second sense, for a quantum memory, but a decoding circuit in the first sense is in general not fault-tolerant, and hence never used. However, canonical procedure for magic state distillation involves a decoding circuit in the first sense, but does not require classical decoding in the second sense--its error suppression of magic states originates from post-selection.
