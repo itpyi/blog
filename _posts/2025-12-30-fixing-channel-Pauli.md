@@ -5,7 +5,7 @@ tags: [量子计算 | Quantum Computation, 量子纠错 | Quantum Error Correcti
 math: true
 ---
 
-A common argument in quantum error correction is like, "this series of operations maps a logical $Z$ to something, and a logical $X$ to something, so it acts like some particular channel at the logical level." However, the reason behind this argument is not that trivial.
+A common argument in quantum error correction is like, "this series of operations maps a logical $Z$ to something, and a logical $X$ to something, so it acts like some particular channel at the logical level." This argument is valid. However, the reason behind it is not that trivial.
 
 The problem is equivalent to the following one: if a channel leaves $X$ and $Z$ invariant, can we conclude that it is the identity channel? Linearity alone is not enough, since $X$ and $Z$ do not form a complete basis of the operator algebra.
 
@@ -18,7 +18,7 @@ The problem is equivalent to the following one: if a channel leaves $X$ and $Z$ 
 
 > *Proof.* Consider pure states $(I\pm Z)/2$ under channel $\mathcal{E}$. The results are $(\mathcal{E}(I) \pm Z)/2$.
 > Positivity and trace preserving of the channel then requires $\mathcal{E}(I) = I$. In fact, we have $\braket{0|\mathcal{E}(I)|0}\geq 1$ and $\braket{1|\mathcal{E}(I)|1}\geq 1$, but $\operatorname{tr} \mathcal{E}(I) = \operatorname{tr} I = 2$, so $\braket{0|\mathcal{E}(I)|0} = \braket{1|\mathcal{E}(I)|1} = 1$. 
-> Furthermore, $0 \leq (\bra{0}+\lambda^{*} \bra{1})(\mathcal{E}(I)+Z)(\ket{0}+\lambda \ket{1})=2+(\lambda \braket{0|\mathcal{I}|1}+\text{c.c.})$ holds for any $\lambda$. So $\braket{0|\mathcal{E}(I)|1} = \braket{1|\mathcal{E}(I)|0} = 0$. This shows that $\mathcal{E}(I) = I$.
+> Furthermore, $0 \leq (\bra{0}+\lambda^{*} \bra{1})(\mathcal{E}(I)+Z)(\ket{0}+\lambda \ket{1})=2+(\lambda \braket{0|\mathcal{E}(I)|1}+\text{c.c.})$ holds for any $\lambda$. So $\braket{0|\mathcal{E}(I)|1} = \braket{1|\mathcal{E}(I)|0} = 0$. This shows that $\mathcal{E}(I) = I$.
 
 > **Lemma**
 > 
@@ -46,7 +46,7 @@ The problem is equivalent to the following one: if a channel leaves $X$ and $Z$ 
 
 Note that in the derivation above, the first lemma requires only positivity. It is the second lemma that requires complete positivity, which is encoded in the form of Kraus operator. We can see from another point of view why complete positivity is necessary for our result.
 
-Linearity and trace preserving properties make a channel map the Block sphere to an ellipsoid (including degenerate forms like spheres or points). In fact, it can only map $(I + \boldsymbol{x}\cdot\boldsymbol{\sigma})/2$ to $(I + f(\boldsymbol{x})\cdot\boldsymbol{\sigma})/2$, where $f$ is a linear map. Now positivity requires the result state to be in the Bloch sphere. So with positivity (and linearity and trace preserving) alone, we can only say that a channel maps the Block sphere to an ellipsoid inside the sphere. 
+Linearity and trace preserving properties make a channel map the Block sphere to an ellipsoid (including degenerate forms like spheres or points). In fact, it can only map $(I + \boldsymbol{x}\cdot\boldsymbol{\sigma})/2$ to $(I + \boldsymbol{f}(\boldsymbol{x})\cdot\boldsymbol{\sigma})/2$, where $\boldsymbol{f}$ is a linear map. Now positivity requires the result state to be in the Bloch sphere. So with positivity (and linearity and trace preserving) alone, we can only say that a channel maps the Block sphere to an ellipsoid inside the sphere. 
 
 This constraint cannot rule out the possibility that there is a channel that keeps the $x-z$ plane invariant, but squeezes along the $y$ direction. So with the first lemma, we cannot conclude that the channel we consider is identity.
 
