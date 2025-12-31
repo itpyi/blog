@@ -7,7 +7,10 @@ math: true
 
 A common argument in quantum error correction is like, "this series of operations maps a logical $Z$ to something, and a logical $X$ to something, so it acts like some particular channel at the logical level." This argument is valid. However, the reason behind it is not that trivial.
 
-The problem is equivalent to the following one: if a channel leaves $X$ and $Z$ invariant, can we conclude that it is the identity channel? Linearity alone is not enough, since $X$ and $Z$ do not form a complete basis of the operator algebra.
+The problem is equivalent to the following one: if a channel leaves $X$ and $Z$ invariant, can we conclude that it is the identity channel?
+If the channel is merely unitary evolution, this is trivial. 
+However, in the practice of quantum error correction, such operations usually contain measurements and feedback, forcing us to discuss at the level of quantum channels, i.e., completely positive trace preserving maps between density matrices. 
+Linearity alone is thus not enough, since $X$ and $Z$ do not form a complete basis of the operator algebra.
 
 ## A simple derivation
 
