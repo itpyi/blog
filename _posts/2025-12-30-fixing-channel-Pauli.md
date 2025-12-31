@@ -5,7 +5,7 @@ tags: [量子计算 | Quantum Computation, 量子纠错 | Quantum Error Correcti
 math: true
 ---
 
-A common argument in quantum error correction is like, "this series of operations maps a logical $Z$ to something, and a logical $X$ to something, so it acts like some particular channel at the logical level." This argument is valid. However, the reason behind it is not that trivial.
+A common argument in quantum error correction is like, "this series of operations maps the logical $Z$ of code A to the logical $Z$ of code B, and the logical $X$ of A to the logical $X$ of B, so it transforms code A to code B." You may have seen such arguments in discussions on encoding, code switching, and gauge fixing... This argument is valid. However, the reason behind it is not that trivial.
 
 The problem is equivalent to the following one: if a channel leaves $X$ and $Z$ invariant, can we conclude that it is the identity channel?
 If the channel is merely unitary evolution, this is trivial. 
