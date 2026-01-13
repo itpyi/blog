@@ -5,6 +5,8 @@ tags: [Typst]
 description: A lightweight Typst utility for maintaining a single figure library while seamlessly exporting individual, auto-cropped vector graphics for LaTeX or PowerPoint.
 ---
 
+> This post was refined with the assistance of Gemini to improve clarity and structure.
+{: .prompt-info }
 
 [Typst](https://typst.app/), combined with [CeTZ](https://cetz-package.github.io/), is a powerful alternative to TikZ or Matplotlib for creating academic illustrations. However, when working on a paper or a presentation (LaTeX/PPT), managing dozens of separate `.typ` files for different figures becomes a headache.
 
