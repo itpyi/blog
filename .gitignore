@@ -25,9 +25,12 @@ package-lock.json
 # Misc
 _sass/vendors
 assets/js/dist
+<<<<<<< HEAD
 
 # DS_Store
 **/.DS_Store
 
 # drafts
 _drafts/*
+=======
+>>>>>>> v7.4.1
