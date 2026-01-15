@@ -4,7 +4,6 @@ icon: fas fa-info-circle
 order: 4
 ---
 
-<<<<<<< HEAD
 本站主要包括如下几类内容：
 
 - 学术随笔（Scholarly Notes）：梳理某一领域的发展历史、某一问题的前沿进展，或表达对一些学术问题的个人理解。包含较多技术细节的一般提供 PDF 版本，网页只是作为简介和导引。这类内容预设的读者是作者本人（例如梳理文献以备查找）、学界同行以及任何对严肃的学术研究感兴趣的人。
@@ -33,7 +32,3 @@ This site primarily includes the following categories of content:
 - Personal Notes: These are more personal notes and records.
 
 This site is primarily written in Chinese, with occasional articles in English. Categories and tags related to academic topics are provided with English translations. This site generally uses simplified Chinese characters, which are easier to read on small screens. We welcome visitors of all languages ​​and scripts to visit and communicate. The browser's one-click translation function can largely eliminate language barriers.
-=======
-> Add Markdown syntax content to file `_tabs/about.md`{: .filepath } and it will show up on this page.
-{: .prompt-tip }
->>>>>>> v7.4.1
