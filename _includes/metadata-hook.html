@@ -3,26 +3,54 @@
   <!-- Load full Prism.js with manual mode to prevent auto-highlighting -->
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js" data-manual></script>
   
-  <!-- Prism Typst language definition -->
-  <script src="https://cdn.jsdelivr.net/npm/prism-typst@0.2.4/dist/prism-typst.min.js"></script>
+  <!-- Prism Typst language definition (local copy; CDN package URL was 404) -->
+  <script src="{{ '/assets/js/vendor/prism-typst.js' | relative_url }}"></script>
   
   <!-- Custom Typst highlighter that only targets Typst blocks -->
   <script>
     // Run immediately after scripts load, before DOMContentLoaded
     (function() {
       function highlightTypst() {
-        // Only highlight code blocks with language-typst class
+        // Convert Typst blocks to Chirpy-like Rouge table structure so
+        // header/copy/line-number UI stays consistent with other languages.
         document.querySelectorAll('pre > code.language-typst').forEach(function(element) {
-          // Skip if already highlighted or if it's a Rouge block
-          if (element.classList.contains('prism-highlighted') || element.querySelector('.rouge-gutter')) {
-            return;
-          }
-          
+          var pre = element.parentElement;
+          if (!pre || pre.closest('.language-typst.highlighter-rouge')) return;
+
+          var rawText = element.textContent;
+          var highlighted = rawText;
+
           if (window.Prism && Prism.languages.typst) {
-            var text = element.textContent;
-            element.innerHTML = Prism.highlight(text, Prism.languages.typst, 'typst');
-            element.classList.add('prism-highlighted');
+            highlighted = Prism.highlight(rawText, Prism.languages.typst, 'typst');
           }
+
+          var lines = rawText.replace(/\n$/, '').split('\n');
+          var lineCount = Math.max(lines.length, 1);
+          var lineNumbers = '';
+          for (var i = 1; i <= lineCount; i++) {
+            lineNumbers += i + '\n';
+          }
+
+          var wrapper = document.createElement('div');
+          wrapper.className = 'language-typst highlighter-rouge';
+          wrapper.innerHTML =
+            '<div class="code-header">' +
+              '<span data-label-text="Typst"><i class="fas fa-code fa-fw small"></i></span>' +
+              '<button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button>' +
+            '</div>' +
+            '<div class="highlight"><code><table class="rouge-table"><tbody><tr>' +
+              '<td class="rouge-gutter gl"><pre class="lineno"></pre></td>' +
+              '<td class="rouge-code"><pre class="prism-typst-code language-typst prism-highlighted"></pre></td>' +
+            '</tr></tbody></table></code></div>';
+
+          var gutter = wrapper.querySelector('.rouge-gutter .lineno');
+          gutter.textContent = lineNumbers;
+
+          var codePre = wrapper.querySelector('.rouge-code > pre.prism-typst-code');
+          codePre.innerHTML = highlighted;
+
+          // Replace original <pre><code class="language-typst">...</code></pre>
+          pre.replaceWith(wrapper);
         });
       }
       
@@ -37,32 +65,69 @@
   
   <!-- Minimal Prism CSS for Typst syntax highlighting -->
   <style>
-    /* Typst-specific token colors matching VS Code theme */
-    code.language-typst.prism-highlighted .token.comment,
-    code.language-typst.prism-highlighted .token.prolog,
-    code.language-typst.prism-highlighted .token.doctype { color: #6a9955; }
+    /* Typst token colors (default: light mode) */
+    pre.language-typst.prism-highlighted .token.comment,
+    pre.language-typst.prism-highlighted .token.prolog,
+    pre.language-typst.prism-highlighted .token.doctype { color: #008000 !important; }
     
-    code.language-typst.prism-highlighted .token.string { color: #ce9178; }
+    pre.language-typst.prism-highlighted .token.string { color: #a31515 !important; }
     
-    code.language-typst.prism-highlighted .token.keyword,
-    code.language-typst.prism-highlighted .token.boolean { color: #569cd6; }
+    pre.language-typst.prism-highlighted .token.keyword,
+    pre.language-typst.prism-highlighted .token.boolean { color: #0000ff !important; }
     
-    code.language-typst.prism-highlighted .token.function { color: #dcdcaa; }
+    pre.language-typst.prism-highlighted .token.function { color: #795e26 !important; }
     
-    code.language-typst.prism-highlighted .token.number { color: #b5cea8; }
+    pre.language-typst.prism-highlighted .token.number { color: #098658 !important; }
     
-    code.language-typst.prism-highlighted .token.operator,
-    code.language-typst.prism-highlighted .token.punctuation { color: #d4d4d4; }
+    pre.language-typst.prism-highlighted .token.operator,
+    pre.language-typst.prism-highlighted .token.punctuation { color: #000000 !important; }
     
-    code.language-typst.prism-highlighted .token.variable { color: #9cdcfe; }
-    
-    /* Light mode adjustments */
-    [data-mode="light"] code.language-typst.prism-highlighted .token.comment { color: #008000; }
-    [data-mode="light"] code.language-typst.prism-highlighted .token.string { color: #a31515; }
-    [data-mode="light"] code.language-typst.prism-highlighted .token.keyword { color: #0000ff; }
-    [data-mode="light"] code.language-typst.prism-highlighted .token.function { color: #795e26; }
-    [data-mode="light"] code.language-typst.prism-highlighted .token.number { color: #098658; }
-    [data-mode="light"] code.language-typst.prism-highlighted .token.operator,
-    [data-mode="light"] code.language-typst.prism-highlighted .token.punctuation { color: #000000; }
+    pre.language-typst.prism-highlighted .token.variable { color: #001080 !important; }
+
+    /* Explicit dark mode */
+    [data-mode="dark"] pre.language-typst.prism-highlighted .token.comment,
+    [data-mode="dark"] pre.language-typst.prism-highlighted .token.prolog,
+    [data-mode="dark"] pre.language-typst.prism-highlighted .token.doctype { color: #6a9955 !important; }
+
+    [data-mode="dark"] pre.language-typst.prism-highlighted .token.string { color: #ce9178 !important; }
+
+    [data-mode="dark"] pre.language-typst.prism-highlighted .token.keyword,
+    [data-mode="dark"] pre.language-typst.prism-highlighted .token.boolean { color: #569cd6 !important; }
+
+    [data-mode="dark"] pre.language-typst.prism-highlighted .token.function { color: #dcdcaa !important; }
+
+    [data-mode="dark"] pre.language-typst.prism-highlighted .token.number { color: #b5cea8 !important; }
+
+    [data-mode="dark"] pre.language-typst.prism-highlighted .token.operator,
+    [data-mode="dark"] pre.language-typst.prism-highlighted .token.punctuation { color: #d4d4d4 !important; }
+
+    [data-mode="dark"] pre.language-typst.prism-highlighted .token.variable { color: #9cdcfe !important; }
+
+    /* System dark mode when user hasn't manually switched theme */
+    @media (prefers-color-scheme: dark) {
+      html:not([data-mode]) pre.language-typst.prism-highlighted .token.comment,
+      html:not([data-mode]) pre.language-typst.prism-highlighted .token.prolog,
+      html:not([data-mode]) pre.language-typst.prism-highlighted .token.doctype { color: #6a9955 !important; }
+
+      html:not([data-mode]) pre.language-typst.prism-highlighted .token.string { color: #ce9178 !important; }
+
+      html:not([data-mode]) pre.language-typst.prism-highlighted .token.keyword,
+      html:not([data-mode]) pre.language-typst.prism-highlighted .token.boolean { color: #569cd6 !important; }
+
+      html:not([data-mode]) pre.language-typst.prism-highlighted .token.function { color: #dcdcaa !important; }
+
+      html:not([data-mode]) pre.language-typst.prism-highlighted .token.number { color: #b5cea8 !important; }
+
+      html:not([data-mode]) pre.language-typst.prism-highlighted .token.operator,
+      html:not([data-mode]) pre.language-typst.prism-highlighted .token.punctuation { color: #d4d4d4 !important; }
+
+      html:not([data-mode]) pre.language-typst.prism-highlighted .token.variable { color: #9cdcfe !important; }
+    }
+
+    /* Keep layout compatible with Chirpy Rouge blocks */
+    .language-typst.highlighter-rouge .highlight code .rouge-code > pre.prism-typst-code {
+      margin: 0;
+      white-space: pre;
+    }
   </style>
 {% endif %}

@@ -27,7 +27,7 @@ description: 借助 typst 中的上下文相关变量，使用户可以便捷地
 
 `pkg.typ` 中：
 
-```
+```typst
 #let x = 1
 
 #let A(body) = {[#x #body]}
@@ -37,7 +37,7 @@ description: 借助 typst 中的上下文相关变量，使用户可以便捷地
 
 `main.typ` 中
 
-```
+```typst
 #import "pkg.typ": *
 
 #let x = 2
@@ -49,7 +49,7 @@ description: 借助 typst 中的上下文相关变量，使用户可以便捷地
 
 或者 `main.typ` 中
 
-```
+```typst
 #import "pkg.typ": *
 
 #if true{
@@ -61,7 +61,7 @@ description: 借助 typst 中的上下文相关变量，使用户可以便捷地
 此时 `x` 值的更改只在 `#if true` 后的花括号中成立，无效。
 
 或者 `pkg.typ` 中：
-```
+```typst
 #let x = 1
 
 #let A(body) = {[#x #body]}
@@ -73,7 +73,7 @@ description: 借助 typst 中的上下文相关变量，使用户可以便捷地
 
 且在 `main.typ` 中：
 
-```
+```typst
 #import "pkg.typ": *
 
 #set-per(2)
@@ -88,7 +88,7 @@ description: 借助 typst 中的上下文相关变量，使用户可以便捷地
 结论：可行，但需要重新定义函数。
 
 `pkg.typ` 中：
-```
+```typst
 #let x = 1
 
 #let A(pre: x, body) = {[#pre #body]}
@@ -96,7 +96,7 @@ description: 借助 typst 中的上下文相关变量，使用户可以便捷地
 #let C(pre: x, body) = {[#pre #body]}
 ```
 `main.typ` 中
-```
+```typst
 #import "pkg.typ": *
 
 #let A = A.with(pre: 2)
@@ -110,7 +110,7 @@ description: 借助 typst 中的上下文相关变量，使用户可以便捷地
 我们发现，我们需要逐个地重新定义函数，才能使得改动对所有函数都生效。
 
 如果试图在 `main.typ` 中
-```
+```typst
 #import "pkg.typ": *
 
 #let func-list = (A, B, C)
@@ -131,7 +131,7 @@ description: 借助 typst 中的上下文相关变量，使用户可以便捷地
 使用 `state` 和 `context` 特性。见[官方文档](https://typst.app/docs/reference/introspection/state/)。
 
 `pkg.typ` 中
-```
+```typst
 #let x-value = state("x", 1)
 
 #let A(body) = {
@@ -154,7 +154,7 @@ description: 借助 typst 中的上下文相关变量，使用户可以便捷地
 }
 ```
 `main.typ`  中
-```
+```typst
 #import "pkg.typ": *
 
 #set-pre(2)
@@ -171,26 +171,26 @@ description: 借助 typst 中的上下文相关变量，使用户可以便捷地
 由 `state` 定义的、`self.update()` 更新的、`self.get()` 获得的，是一个上下文相关的对象，Typst 规定，这样的对象必须在 `context` 环境中操作。考虑下诸例。
 - 一个上下文依赖的对象不等于一个整数：
 
-  ```
+  ```typst
   #let s = state("x", 1)
 
   #let x = context s.get()
   #(x == 1) //false
   ```
--  `x` 是什么取决于如何声明它，所以它仍然是一个上下文依赖的对象而非整数：
+- `x` 是什么取决于如何声明它，所以它仍然是一个上下文依赖的对象而非整数：
 
-  ```
+  ```typst
   #let x = context s.get()
   #context{x == 1} //false
   ```
 - `context` 作用于后面的整个表达式：
 
-  ```
+  ```typst
   #(context s.get() == 1) //true
   ```
 - 另一种写法：
 
-  ```
+  ```typst
   #context{
     let x = s.get()
     x == 1
@@ -198,27 +198,27 @@ description: 借助 typst 中的上下文相关变量，使用户可以便捷地
   ```
 - 可以定义更复杂的上下文依赖对象，但仍然不能将它等同于其取值：
   
-  ```
+  ```typst
   #let b = context{s.get() == 1}
   #b //true
   #(b == true) //false
   ```
 - 定义变量时，编译器直接执行此命令，因此所有上下文相关的操作都必须在 `context` 环境中实现：
   
-  ```
+  ```typst
   #let b = {s.get() == 1} //error: can only be used when context is known
   #context b 
   ```
 - 定义函数时，只在调用函数时执行代码，因此定义时不必写出 `context`，只要在 `context` 中调用此函数即可（虽然这种操作看起来有些危险）：
   
-  ```
+  ```typst
   #let b() = {s.get() == 1}
   #context b() //true
   #context(b()==true) //true
   ```
 - 如果在定义函数时即声明 `context`，行为将与定义变量类似（注意第三行与上例的区别）：
   
-  ```
+  ```typst
   #let b() = context{s.get() == 1}
   #b() //true
   #(b() == true) //false
@@ -226,7 +226,7 @@ description: 借助 typst 中的上下文相关变量，使用户可以便捷地
 
 因此，如果函数 `A, B, C` 并不是简单地输出 `x`，而是要先计算 `x` 得到一个结果再输出，那么这个计算必须被放在 `context` 环境中。例如，我们希望函数 `A` 将 `x + 1` 放在文本前，则在 `pkg.typ` 中
 
-```
+```typst
 #let x-value = state("y", 1)
 
 // 不能这样写
@@ -278,7 +278,7 @@ description: 借助 typst 中的上下文相关变量，使用户可以便捷地
 
 但是，如果在 `A` 中仍需对 `pre()` 的返回值进行其他操作，仅当 `x + 1 > 2` 时加数字前缀，则只能用方法二、三，不能用方法四，因为后者的返回值不是一个数。例如
 
-```
+```typst
 // 可以这样写
 #let pre() = {
   let x = x-value.get()
