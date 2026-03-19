@@ -1,0 +1,36 @@
+<!-- Custom: Add Prism.js for Typst syntax highlighting -->
+{% if page.layout == 'post' %}
+  <!-- Prism.js core -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  
+  <!-- Prism Typst language definition -->
+  <script src="https://cdn.jsdelivr.net/npm/prism-typst@0.2.4/dist/prism-typst.min.js"></script>
+  
+  <!-- Custom styles to match Chirpy theme -->
+  <style>
+    /* Override Prism styles to match Chirpy's Rouge highlighting */
+    pre[class*="language-"] {
+      background: var(--highlight-bg-color);
+      border-radius: 0.375rem;
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+    
+    code[class*="language-"] {
+      color: var(--highlighter-rouge-color);
+      font-family: var(--font-family-monospace);
+    }
+    
+    /* Ensure Prism code blocks have similar styling to Rouge */
+    .language-typst {
+      display: block;
+      overflow-x: auto;
+    }
+    
+    /* Dark mode adjustments */
+    [data-mode="dark"] pre[class*="language-"] {
+      background: #161b22;
+    }
+  </style>
+{% endif %}
