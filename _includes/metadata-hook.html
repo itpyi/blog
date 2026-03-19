@@ -1,36 +1,55 @@
 <!-- Custom: Add Prism.js for Typst syntax highlighting -->
 {% if page.layout == 'post' %}
-  <!-- Prism.js core -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <!-- Load Prism core with manual mode to prevent auto-highlighting -->
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" data-manual></script>
   
   <!-- Prism Typst language definition -->
   <script src="https://cdn.jsdelivr.net/npm/prism-typst@0.2.4/dist/prism-typst.min.js"></script>
   
-  <!-- Custom styles to match Chirpy theme -->
+  <!-- Custom Typst highlighter that only targets Typst blocks -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Only highlight code blocks with language-typst class
+      // Rouge-highlighted blocks have different structure (table with rouge-gutter/rouge-code)
+      // so we only target plain code blocks that Jekyll didn't highlight
+      document.querySelectorAll('pre > code.language-typst').forEach(function(element) {
+        if (window.Prism && Prism.languages.typst && !element.querySelector('.rouge-gutter')) {
+          var text = element.textContent;
+          element.innerHTML = Prism.highlight(text, Prism.languages.typst, 'typst');
+          element.classList.add('prism-highlighted');
+        }
+      });
+    });
+  </script>
+  
+  <!-- Minimal Prism CSS for Typst syntax highlighting -->
   <style>
-    /* Override Prism styles to match Chirpy's Rouge highlighting */
-    pre[class*="language-"] {
-      background: var(--highlight-bg-color);
-      border-radius: 0.375rem;
-      padding: 1rem;
-      margin: 1rem 0;
-    }
+    /* Typst-specific token colors matching VS Code theme */
+    code.language-typst.prism-highlighted .token.comment,
+    code.language-typst.prism-highlighted .token.prolog,
+    code.language-typst.prism-highlighted .token.doctype { color: #6a9955; }
     
-    code[class*="language-"] {
-      color: var(--highlighter-rouge-color);
-      font-family: var(--font-family-monospace);
-    }
+    code.language-typst.prism-highlighted .token.string { color: #ce9178; }
     
-    /* Ensure Prism code blocks have similar styling to Rouge */
-    .language-typst {
-      display: block;
-      overflow-x: auto;
-    }
+    code.language-typst.prism-highlighted .token.keyword,
+    code.language-typst.prism-highlighted .token.boolean { color: #569cd6; }
     
-    /* Dark mode adjustments */
-    [data-mode="dark"] pre[class*="language-"] {
-      background: #161b22;
-    }
+    code.language-typst.prism-highlighted .token.function { color: #dcdcaa; }
+    
+    code.language-typst.prism-highlighted .token.number { color: #b5cea8; }
+    
+    code.language-typst.prism-highlighted .token.operator,
+    code.language-typst.prism-highlighted .token.punctuation { color: #d4d4d4; }
+    
+    code.language-typst.prism-highlighted .token.variable { color: #9cdcfe; }
+    
+    /* Light mode adjustments */
+    [data-mode="light"] code.language-typst.prism-highlighted .token.comment { color: #008000; }
+    [data-mode="light"] code.language-typst.prism-highlighted .token.string { color: #a31515; }
+    [data-mode="light"] code.language-typst.prism-highlighted .token.keyword { color: #0000ff; }
+    [data-mode="light"] code.language-typst.prism-highlighted .token.function { color: #795e26; }
+    [data-mode="light"] code.language-typst.prism-highlighted .token.number { color: #098658; }
+    [data-mode="light"] code.language-typst.prism-highlighted .token.operator,
+    [data-mode="light"] code.language-typst.prism-highlighted .token.punctuation { color: #000000; }
   </style>
 {% endif %}
