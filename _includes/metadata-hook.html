@@ -1,7 +1,7 @@
 <!-- Custom: Add Prism.js for Typst syntax highlighting -->
 {% if page.layout == 'post' %}
-  <!-- Load full Prism.js with manual mode to prevent auto-highlighting -->
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js" data-manual></script>
+  <!-- Load local full Prism.js with manual mode -->
+  <script src="{{ '/assets/js/lib/prism.min.js' | relative_url }}" data-manual></script>
   
   <!-- Load local Typst language definition -->
   <script src="{{ '/assets/js/lib/prism-typst.js' | relative_url }}"></script>
@@ -11,17 +11,47 @@
     // Run immediately after scripts load, before DOMContentLoaded
     (function() {
       function highlightTypst() {
-        // Convert Typst blocks to Chirpy-like Rouge table structure so
-        // header/copy/line-number UI stays consistent with other languages.
-        document.querySelectorAll('pre > code.language-typst').forEach(function(element) {
-          var pre = element.parentElement;
-          if (!pre || pre.closest('.language-typst.highlighter-rouge')) return;
+        console.log('[Typst Highlighter] Starting...');
+        
+        // Safety check for Prism
+        if (!window.Prism) {
+            console.warn('[Typst Highlighter] Prism is not defined!');
+        }
 
+        // Find blocks. Strategy:
+        // 1. Look for pre > code.language-typst (Standard kramdown output for unknown language)
+        // 2. Look for .language-typst .rouge-code (If Rouge somehow processed it but we want to override)
+        // 3. Look for .language-typst.highlighter-rouge (If Rouge wrapped it)
+        
+        var targets = [];
+        
+        document.querySelectorAll('pre > code.language-typst').forEach(function(code) {
+            targets.push({ node: code, type: 'code' });
+        });
+        
+        // Also check for blocks that might be wrapped by Rouge but treated as plaintext or similar
+        document.querySelectorAll('.language-typst.highlighter-rouge pre.highlight > code').forEach(function(code) {
+             targets.push({ node: code, type: 'wrapped' });
+        });
+
+        console.log('[Typst Highlighter] Found ' + targets.length + ' potential blocks.');
+
+        targets.forEach(function(target) {
+          var element = target.node;
+          var pre = element.parentElement;
+          
+          // Check if already processed by us
+          if (pre.closest('.language-typst.highlighter-rouge.prism-processed')) return;
+          
           var rawText = element.textContent;
           var highlighted = rawText;
 
           if (window.Prism && Prism.languages.typst) {
-            highlighted = Prism.highlight(rawText, Prism.languages.typst, 'typst');
+            try {
+                highlighted = Prism.highlight(rawText, Prism.languages.typst, 'typst');
+            } catch (e) {
+                console.error('[Typst Highlighter] Error highlighting:', e);
+            }
           }
 
           var lines = rawText.replace(/\n$/, '').split('\n');
@@ -32,29 +62,28 @@
           }
 
           var wrapper = document.createElement('div');
-          wrapper.className = 'language-typst highlighter-rouge';
+          wrapper.className = 'language-typst highlighter-rouge prism-processed';
           wrapper.innerHTML =
             '<div class="code-header">' +
               '<span data-label-text="Typst"><i class="fas fa-code fa-fw small"></i></span>' +
               '<button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button>' +
             '</div>' +
             '<div class="highlight"><code><table class="rouge-table"><tbody><tr>' +
-              '<td class="rouge-gutter gl"><pre class="lineno"></pre></td>' +
-              '<td class="rouge-code"><pre class="prism-typst-code language-typst prism-highlighted"></pre></td>' +
+              '<td class="rouge-gutter gl"><pre class="lineno">' + lineNumbers + '</pre></td>' +
+              '<td class="rouge-code"><pre class="prism-typst-code language-typst prism-highlighted">' + highlighted + '</pre></td>' +
             '</tr></tbody></table></code></div>';
 
-          var gutter = wrapper.querySelector('.rouge-gutter .lineno');
-          gutter.textContent = lineNumbers;
+          // Determine what to replace
+          var toReplace = pre;
+          var container = pre.closest('.highlighter-rouge');
+          if (container) {
+              toReplace = container;
+          }
 
-          var codePre = wrapper.querySelector('.rouge-code > pre.prism-typst-code');
-          codePre.innerHTML = highlighted;
-
-          // Replace original <pre><code class="language-typst">...</code></pre>
-          pre.replaceWith(wrapper);
+          toReplace.replaceWith(wrapper);
         });
       }
       
-      // Try to highlight when DOM is ready
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', highlightTypst);
       } else {
