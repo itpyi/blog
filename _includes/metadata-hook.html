@@ -3,8 +3,8 @@
   <!-- Load full Prism.js with manual mode to prevent auto-highlighting -->
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js" data-manual></script>
   
-  <!-- Prism Typst language definition (local copy; CDN package URL was 404) -->
-  <script src="{{ '/assets/js/vendor/prism-typst.js' | relative_url }}"></script>
+  <!-- Load local Typst language definition -->
+  <script src="{{ '/assets/js/lib/prism-typst.js' | relative_url }}"></script>
   
   <!-- Custom Typst highlighter that only targets Typst blocks -->
   <script>
@@ -65,54 +65,54 @@
   
   <!-- Minimal Prism CSS for Typst syntax highlighting -->
   <style>
-    /* Typst token colors (default: light mode) */
+    /* Typst token colors (Light Mode - Adapted from Chirpy/Rouge) */
     pre.language-typst.prism-highlighted .token.comment,
     pre.language-typst.prism-highlighted .token.prolog,
-    pre.language-typst.prism-highlighted .token.doctype { color: #008000 !important; }
+    pre.language-typst.prism-highlighted .token.doctype { color: #68717a !important; } /* .c */
     
-    pre.language-typst.prism-highlighted .token.string { color: #a31515 !important; }
+    pre.language-typst.prism-highlighted .token.string { color: #0a3069 !important; } /* .s */
     
     pre.language-typst.prism-highlighted .token.keyword,
-    pre.language-typst.prism-highlighted .token.boolean { color: #0000ff !important; }
+    pre.language-typst.prism-highlighted .token.boolean { color: #cf222e !important; } /* .k */
     
-    pre.language-typst.prism-highlighted .token.function { color: #795e26 !important; }
+    pre.language-typst.prism-highlighted .token.function { color: #8250df !important; } /* .nf */
     
-    pre.language-typst.prism-highlighted .token.number { color: #098658 !important; }
+    pre.language-typst.prism-highlighted .token.number { color: #0550ae !important; } /* .mi */
     
     pre.language-typst.prism-highlighted .token.operator,
-    pre.language-typst.prism-highlighted .token.punctuation { color: #000000 !important; }
+    pre.language-typst.prism-highlighted .token.punctuation { color: #24292f !important; } /* default text color or .w */
     
-    pre.language-typst.prism-highlighted .token.variable { color: #001080 !important; }
+    pre.language-typst.prism-highlighted .token.variable { color: #953800 !important; } /* .nb / .nv */
 
     /* Explicit dark mode */
     [data-mode="dark"] pre.language-typst.prism-highlighted .token.comment,
     [data-mode="dark"] pre.language-typst.prism-highlighted .token.prolog,
-    [data-mode="dark"] pre.language-typst.prism-highlighted .token.doctype { color: #6a9955 !important; }
+    [data-mode="dark"] pre.language-typst.prism-highlighted .token.doctype { color: #848484 !important; } /* .c */
 
-    [data-mode="dark"] pre.language-typst.prism-highlighted .token.string { color: #ce9178 !important; }
+    [data-mode="dark"] pre.language-typst.prism-highlighted .token.string { color: #90a959 !important; } /* .s */
 
     [data-mode="dark"] pre.language-typst.prism-highlighted .token.keyword,
-    [data-mode="dark"] pre.language-typst.prism-highlighted .token.boolean { color: #569cd6 !important; }
+    [data-mode="dark"] pre.language-typst.prism-highlighted .token.boolean { color: #aa759f !important; } /* .k */
 
-    [data-mode="dark"] pre.language-typst.prism-highlighted .token.function { color: #dcdcaa !important; }
+    [data-mode="dark"] pre.language-typst.prism-highlighted .token.function { color: #dcdcaa !important; } /* Standard Dark Function Yellow */
 
-    [data-mode="dark"] pre.language-typst.prism-highlighted .token.number { color: #b5cea8 !important; }
+    [data-mode="dark"] pre.language-typst.prism-highlighted .token.number { color: #b5cea8 !important; } /* .mi (or #90a959) */
 
     [data-mode="dark"] pre.language-typst.prism-highlighted .token.operator,
-    [data-mode="dark"] pre.language-typst.prism-highlighted .token.punctuation { color: #d4d4d4 !important; }
+    [data-mode="dark"] pre.language-typst.prism-highlighted .token.punctuation { color: #d4d4d4 !important; } /* default text */
 
-    [data-mode="dark"] pre.language-typst.prism-highlighted .token.variable { color: #9cdcfe !important; }
+    [data-mode="dark"] pre.language-typst.prism-highlighted .token.variable { color: #9cdcfe !important; } /* Light Blue */
 
     /* System dark mode when user hasn't manually switched theme */
     @media (prefers-color-scheme: dark) {
       html:not([data-mode]) pre.language-typst.prism-highlighted .token.comment,
       html:not([data-mode]) pre.language-typst.prism-highlighted .token.prolog,
-      html:not([data-mode]) pre.language-typst.prism-highlighted .token.doctype { color: #6a9955 !important; }
+      html:not([data-mode]) pre.language-typst.prism-highlighted .token.doctype { color: #848484 !important; }
 
-      html:not([data-mode]) pre.language-typst.prism-highlighted .token.string { color: #ce9178 !important; }
+      html:not([data-mode]) pre.language-typst.prism-highlighted .token.string { color: #90a959 !important; }
 
       html:not([data-mode]) pre.language-typst.prism-highlighted .token.keyword,
-      html:not([data-mode]) pre.language-typst.prism-highlighted .token.boolean { color: #569cd6 !important; }
+      html:not([data-mode]) pre.language-typst.prism-highlighted .token.boolean { color: #aa759f !important; }
 
       html:not([data-mode]) pre.language-typst.prism-highlighted .token.function { color: #dcdcaa !important; }
 
