@@ -1,4 +1,5 @@
 
+(function(Prism) {
 const comment = [
   {
     pattern: /\/\*[\s\S]*?\*\//,
@@ -180,3 +181,4 @@ Prism.languages["typst-code"].typst = {
 
 Prism.languages.typ = Prism.languages.typst;
 Prism.languages.typc = Prism.languages["typst-code"];
+}(Prism));
