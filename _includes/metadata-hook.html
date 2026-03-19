@@ -8,50 +8,40 @@
   
   <!-- Custom Typst highlighter that only targets Typst blocks -->
   <script>
-    // Run immediately after scripts load, before DOMContentLoaded
     (function() {
+      function collectTargets() {
+        var targets = [];
+        document.querySelectorAll('pre > code.language-typst').forEach(function(code) {
+          targets.push(code);
+        });
+        document.querySelectorAll('.language-typst.highlighter-rouge pre.highlight > code').forEach(function(code) {
+          targets.push(code);
+        });
+        return targets;
+      }
+
       function highlightTypst() {
-        console.log('[Typst Highlighter] Starting...');
-        
-        // Safety check for Prism
-        if (!window.Prism) {
-            console.warn('[Typst Highlighter] Prism is not defined!');
+        if (!window.Prism || !Prism.languages || !Prism.languages.typst) {
+          return false;
         }
 
-        // Find blocks. Strategy:
-        // 1. Look for pre > code.language-typst (Standard kramdown output for unknown language)
-        // 2. Look for .language-typst .rouge-code (If Rouge somehow processed it but we want to override)
-        // 3. Look for .language-typst.highlighter-rouge (If Rouge wrapped it)
-        
-        var targets = [];
-        
-        document.querySelectorAll('pre > code.language-typst').forEach(function(code) {
-            targets.push({ node: code, type: 'code' });
-        });
-        
-        // Also check for blocks that might be wrapped by Rouge but treated as plaintext or similar
-        document.querySelectorAll('.language-typst.highlighter-rouge pre.highlight > code').forEach(function(code) {
-             targets.push({ node: code, type: 'wrapped' });
-        });
+        var targets = collectTargets();
+        if (targets.length === 0) {
+          return false;
+        }
 
-        console.log('[Typst Highlighter] Found ' + targets.length + ' potential blocks.');
-
-        targets.forEach(function(target) {
-          var element = target.node;
+        targets.forEach(function(element) {
           var pre = element.parentElement;
-          
-          // Check if already processed by us
+          if (!pre) return;
           if (pre.closest('.language-typst.highlighter-rouge.prism-processed')) return;
-          
-          var rawText = element.textContent;
+
+          var rawText = element.textContent || '';
           var highlighted = rawText;
 
-          if (window.Prism && Prism.languages.typst) {
-            try {
-                highlighted = Prism.highlight(rawText, Prism.languages.typst, 'typst');
-            } catch (e) {
-                console.error('[Typst Highlighter] Error highlighting:', e);
-            }
+          try {
+            highlighted = Prism.highlight(rawText, Prism.languages.typst, 'typst');
+          } catch (e) {
+            console.error('[Typst Highlighter] Error highlighting:', e);
           }
 
           var lines = rawText.replace(/\n$/, '').split('\n');
@@ -73,22 +63,38 @@
               '<td class="rouge-code"><pre class="prism-typst-code language-typst prism-highlighted">' + highlighted + '</pre></td>' +
             '</tr></tbody></table></code></div>';
 
-          // Determine what to replace
           var toReplace = pre;
           var container = pre.closest('.highlighter-rouge');
           if (container) {
-              toReplace = container;
+            toReplace = container;
           }
-
           toReplace.replaceWith(wrapper);
         });
+
+        return true;
       }
-      
+
+      function initTypstHighlighter() {
+        if (highlightTypst()) return;
+
+        var retries = 0;
+        var maxRetries = 30;
+        var timer = setInterval(function() {
+          retries += 1;
+          if (highlightTypst() || retries >= maxRetries) {
+            clearInterval(timer);
+          }
+        }, 250);
+      }
+
       if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', highlightTypst);
+        document.addEventListener('DOMContentLoaded', initTypstHighlighter);
       } else {
-        highlightTypst();
+        initTypstHighlighter();
       }
+
+      window.addEventListener('load', initTypstHighlighter);
+      window.addEventListener('pageshow', initTypstHighlighter);
     })();
   </script>
   
