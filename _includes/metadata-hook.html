@@ -1,25 +1,38 @@
 <!-- Custom: Add Prism.js for Typst syntax highlighting -->
 {% if page.layout == 'post' %}
-  <!-- Load Prism core with manual mode to prevent auto-highlighting -->
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" data-manual></script>
+  <!-- Load full Prism.js with manual mode to prevent auto-highlighting -->
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js" data-manual></script>
   
   <!-- Prism Typst language definition -->
   <script src="https://cdn.jsdelivr.net/npm/prism-typst@0.2.4/dist/prism-typst.min.js"></script>
   
   <!-- Custom Typst highlighter that only targets Typst blocks -->
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Only highlight code blocks with language-typst class
-      // Rouge-highlighted blocks have different structure (table with rouge-gutter/rouge-code)
-      // so we only target plain code blocks that Jekyll didn't highlight
-      document.querySelectorAll('pre > code.language-typst').forEach(function(element) {
-        if (window.Prism && Prism.languages.typst && !element.querySelector('.rouge-gutter')) {
-          var text = element.textContent;
-          element.innerHTML = Prism.highlight(text, Prism.languages.typst, 'typst');
-          element.classList.add('prism-highlighted');
-        }
-      });
-    });
+    // Run immediately after scripts load, before DOMContentLoaded
+    (function() {
+      function highlightTypst() {
+        // Only highlight code blocks with language-typst class
+        document.querySelectorAll('pre > code.language-typst').forEach(function(element) {
+          // Skip if already highlighted or if it's a Rouge block
+          if (element.classList.contains('prism-highlighted') || element.querySelector('.rouge-gutter')) {
+            return;
+          }
+          
+          if (window.Prism && Prism.languages.typst) {
+            var text = element.textContent;
+            element.innerHTML = Prism.highlight(text, Prism.languages.typst, 'typst');
+            element.classList.add('prism-highlighted');
+          }
+        });
+      }
+      
+      // Try to highlight when DOM is ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', highlightTypst);
+      } else {
+        highlightTypst();
+      }
+    })();
   </script>
   
   <!-- Minimal Prism CSS for Typst syntax highlighting -->
