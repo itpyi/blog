@@ -1,0 +1,18 @@
+---
+---
+
+/* prettier-ignore */
+@use 'main
+{%- if jekyll.environment == 'production' -%}
+  .bundle
+{%- endif -%}
+';
+
+/* Override body font-family with Charis SIL and LXGW WenKai */
+body {
+  font-family: 'Charis SIL', 'Noto Serif SC', 'Noto Serif TC', 'Microsoft Yahei', serif !important;
+}
+
+.site-subtitle.fst-italic {
+  font-style: normal !important;
+}

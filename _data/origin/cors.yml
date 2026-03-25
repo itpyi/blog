@@ -1,0 +1,10 @@
+# Override Google Fonts URL to load Charis SIL and LXGW WenKai
+# This file overrides the gem theme's default font configuration
+
+# webfonts: https://fonts.googleapis.com/css2?family=Charis+SIL:ital,wght@0,400;0,700;1,400;1,700&family=LXGW+WenKai+TC&display=swap
+webfonts: https://fonts.googleapis.com/css2?family=Charis+SIL:ital,wght@0,400;0,700;1,400;1,700&family=Noto+Serif+SC:wght@500&family=Noto+Serif+TC:wght@500&display=swap
+
+# Resource hints for performance optimization
+resources:
+  - https://fonts.googleapis.com
+  - https://fonts.gstatic.com
